@@ -1,0 +1,336 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rückmeldebogen – Interne ergotherapeutische Fachstelle</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f4f6f9;
+      color: #222;
+      padding: 2rem 1rem;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.10);
+      overflow: hidden;
+    }
+    .header {
+      background: #1a6ea8;
+      color: white;
+      padding: 2rem 2.5rem 1.5rem;
+    }
+    .header h1 { font-size: 1.7rem; margin-bottom: 0.3rem; }
+    .header h2 { font-size: 1.1rem; font-weight: 400; color: #cde4f5; margin-bottom: 0.5rem; }
+    .header .tagline { font-size: 0.9rem; color: #a8d0ee; font-style: italic; }
+    .intro-box {
+      background: #eaf4fb;
+      border-left: 4px solid #1a6ea8;
+      margin: 2rem 2.5rem 0;
+      padding: 0.9rem 1.2rem;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      color: #1a4f70;
+    }
+    .intro-box strong { color: #1a6ea8; }
+    .section { padding: 2rem 2.5rem; }
+    .section h3 {
+      font-size: 1.15rem;
+      color: #1a6ea8;
+      margin-bottom: 0.5rem;
+      border-bottom: 2px solid #eaf4fb;
+      padding-bottom: 0.4rem;
+    }
+    .scale-legend {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .scale-legend span {
+      background: #eaf4fb;
+      border-radius: 20px;
+      padding: 0.25rem 0.8rem;
+      color: #1a6ea8;
+      font-weight: 600;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.93rem; }
+    thead th {
+      background: #1a6ea8;
+      color: white;
+      padding: 0.7rem 0.4rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.82rem;
+    }
+    thead th:first-child { text-align: left; padding-left: 1rem; font-size: 0.93rem; }
+    tbody tr:nth-child(even) { background: #f4f9fd; }
+    tbody tr:hover { background: #deeef9; transition: background 0.2s; }
+    tbody td { padding: 0.7rem 0.5rem; vertical-align: middle; }
+    tbody td:first-child { padding-left: 1rem; width: 50%; }
+    tbody td.radio-cell { text-align: center; }
+    input[type="radio"] {
+      width: 18px; height: 18px;
+      cursor: pointer;
+      accent-color: #1a6ea8;
+    }
+    textarea {
+      width: 100%;
+      min-height: 90px;
+      border: 1.5px solid #b3d0e8;
+      border-radius: 6px;
+      padding: 0.7rem 0.9rem;
+      font-size: 0.93rem;
+      font-family: inherit;
+      color: #222;
+      resize: vertical;
+      background: #fafdff;
+      transition: border 0.2s;
+    }
+    textarea:focus { outline: none; border-color: #1a6ea8; background: #fff; }
+    label.open-label {
+      display: block;
+      font-weight: 600;
+      color: #1a6ea8;
+      margin-bottom: 0.4rem;
+      margin-top: 1.2rem;
+      font-size: 0.97rem;
+    }
+    .rating-buttons { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+    .rating-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      padding: 0.5rem 0.9rem;
+      border-radius: 6px;
+      border: 1.5px solid #b3d0e8;
+      background: white;
+      transition: background 0.2s, border 0.2s;
+    }
+    .rating-btn:has(input:checked) {
+      background: #1a6ea8;
+      color: white;
+      border-color: #1a6ea8;
+    }
+    .begr-label {
+      font-weight: 600;
+      color: #1a6ea8;
+      margin-bottom: 0.4rem;
+      display: block;
+      font-size: 0.97rem;
+    }
+    .submit-section {
+      padding: 1.5rem 2.5rem 2rem;
+      text-align: center;
+      border-top: 2px solid #eaf4fb;
+    }
+    .privacy-note { font-size: 0.82rem; color: #777; margin-bottom: 1rem; }
+    button[type="submit"] {
+      background: #1a6ea8;
+      color: white;
+      border: none;
+      padding: 0.85rem 2.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+    button[type="submit"]:hover { background: #155a8a; transform: translateY(-1px); }
+    .success-msg {
+      display: none;
+      background: #e6f9ee;
+      border: 2px solid #2ecc71;
+      border-radius: 8px;
+      padding: 1.5rem;
+      text-align: center;
+      color: #1a7a40;
+      font-size: 1.05rem;
+      margin: 1rem 2.5rem 2rem;
+    }
+    @media (max-width: 600px) {
+      .section, .submit-section { padding-left: 1rem; padding-right: 1rem; }
+      .header { padding: 1.5rem 1rem 1rem; }
+      .intro-box { margin: 1rem 1rem 0; }
+      .scale-legend { gap: 0.5rem; }
+      thead th { font-size: 0.75rem; }
+      tbody td { font-size: 0.85rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>Konzept- und Rückmeldebogen</h1>
+    <h2>Interne ergotherapeutische Fachstelle für Kitas</h2>
+    <div class="tagline">Entlastung &middot; frühe Unterstützung &middot; sichere Schnittstellenarbeit</div>
+  </div>
+
+  <div class="intro-box">
+    <strong>Kurzidee:</strong> Eine interne ergotherapeutische Fachstelle soll Kitas in der Zeit zwischen ersten Beobachtungen, externer Diagnostik und möglicher Bewilligung fachlich stärken.
+  </div>
+
+  <div class="section">
+    <h3>Rückmeldebogen für Kita-Fachkräfte</h3>
+    <p style="margin-bottom:1rem; font-size:0.95rem;">Bitte einschätzen: <strong>Wie stark könnte eine interne ergotherapeutische Fachstelle Ihre Arbeit entlasten?</strong></p>
+
+    <div class="scale-legend">
+      <span>1 = Stark entlastend</span>
+      <span>2 = Mäßig entlastend</span>
+      <span>3 = Wenig entlastend</span>
+      <span>4 = Nicht entlastend</span>
+    </div>
+
+    <form id="rueckmeldebogen" action="https://formspree.io/f/xnjkkldo" method="POST">
+
+      <!-- Unsichtbares Kita-Feld -->
+      <input type="hidden" name="Einrichtung" id="kitaField" value="Unbekannt" />
+
+      <table>
+        <thead>
+          <tr>
+            <th>Bereich</th>
+            <th>1 Stark entlastend</th>
+            <th>2 Mäßig entlastend</th>
+            <th>3 Wenig entlastend</th>
+            <th>4 Nicht entlastend</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Unterstützung bei Kindern mit unklarem Förderbedarf / „Schwebezeit"</td>
+            <td class="radio-cell"><input type="radio" name="q1_schwebezeit" value="1_stark_entlastend" required /></td>
+            <td class="radio-cell"><input type="radio" name="q1_schwebezeit" value="2_maessig_entlastend" /></td>
+            <td class="radio-cell"><input type="radio" name="q1_schwebezeit" value="3_wenig_entlastend" /></td>
+            <td class="radio-cell"><input type="radio" name="q1_schwebezeit" value="4_nicht_entlastend" /></td>
+          </tr>
+          <tr>
+            <td>Mehr Handlungssicherheit im pädagogischen Alltag</td>
+            <td class="radio-cell"><input type="radio" name="q2_handlungssicherheit" value="1_stark_entlastend" required /></td>
+            <td class="radio-cell"><input type="radio" name="q2_handlungssicherheit" value="2_maessig_entlastend" /></td>
+            <td class="radio-cell"><input type="radio" name="q2_handlungssicherheit" value="3_wenig_entlastend" /></td>
+            <td class="radio-cell"><input type="radio" name="q2_handlungssicherheit" value="4_nicht_entlastend" /></td>
+          </tr>
+          <tr>
+            <td>Hilfe bei herausforderndem Verhalten, Regulation und Überforderung</td>
+            <td class="radio-cell"><input type="radio" name="q3_verhalten" value="1_stark_entlastend" required /></td>
+            <td class="radio-cell"><input type="radio" name="q3_verhalten" value="2_maessig_entlastend" /></td>
+            <td class="radio-cell"><input type="radio" name="q3_verhalten" value="3_wenig_entlastend" /></td>
+            <td class="radio-cell"><input type="radio" name="q3_verhalten" value="4_nicht_entlastend" /></td>
+          </tr>
+          <tr>
+            <td>Frühere Wahrnehmung von Entwicklungsauffälligkeiten</td>
+            <td class="radio-cell"><input type="radio" name="q4_entwicklung" value="1_stark_entlastend" required /></td>
+            <td class="radio-cell"><input type="radio" name="q4_entwicklung" value="2_maessig_entlastend" /></td>
+            <td class="radio-cell"><input type="radio" name="q4_entwicklung" value="3_wenig_entlastend" /></td>
+            <td class="radio-cell"><input type="radio" name="q4_entwicklung" value="4_nicht_entlastend" /></td>
+          </tr>
+          <tr>
+            <td>Förderideen für Motorik, Wahrnehmung, Selbstständigkeit und Konzentration</td>
+            <td class="radio-cell"><input type="radio" name="q5_foerderideen" value="1_stark_entlastend" required /></td>
+            <td class="radio-cell"><input type="radio" name="q5_foerderideen" value="2_maessig_entlastend" /></td>
+            <td class="radio-cell"><input type="radio" name="q5_foerderideen" value="3_wenig_entlastend" /></td>
+            <td class="radio-cell"><input type="radio" name="q5_foerderideen" value="4_nicht_entlastend" /></td>
+          </tr>
+          <tr>
+            <td>Unterstützung bei Elterngesprächen und Elternberatung</td>
+            <td class="radio-cell"><input type="radio" name="q6_eltern" value="1_stark_entlastend" required /></td>
+            <td class="radio-cell"><input type="radio" name="q6_eltern" value="2_maessig_entlastend" /></td>
+            <td class="radio-cell"><input type="radio" name="q6_eltern" value="3_wenig_entlastend" /></td>
+            <td class="radio-cell"><input type="radio" name="q6_eltern" value="4_nicht_entlastend" /></td>
+          </tr>
+          <tr>
+            <td>Entlastung bei Beobachtung, Dokumentation und Vorbereitung weiterer Schritte</td>
+            <td class="radio-cell"><input type="radio" name="q7_dokumentation" value="1_stark_entlastend" required /></td>
+            <td class="radio-cell"><input type="radio" name="q7_dokumentation" value="2_maessig_entlastend" /></td>
+            <td class="radio-cell"><input type="radio" name="q7_dokumentation" value="3_wenig_entlastend" /></td>
+            <td class="radio-cell"><input type="radio" name="q7_dokumentation" value="4_nicht_entlastend" /></td>
+          </tr>
+          <tr>
+            <td>Bessere Schnittstellenarbeit mit SPZ, Frühförderung, Ärzt*innen, Fachberatung und Region</td>
+            <td class="radio-cell"><input type="radio" name="q8_schnittstellen" value="1_stark_entlastend" required /></td>
+            <td class="radio-cell"><input type="radio" name="q8_schnittstellen" value="2_maessig_entlastend" /></td>
+            <td class="radio-cell"><input type="radio" name="q8_schnittstellen" value="3_wenig_entlastend" /></td>
+            <td class="radio-cell"><input type="radio" name="q8_schnittstellen" value="4_nicht_entlastend" /></td>
+          </tr>
+          <tr>
+            <td>Entlastung des Teams insgesamt</td>
+            <td class="radio-cell"><input type="radio" name="q9_team" value="1_stark_entlastend" required /></td>
+            <td class="radio-cell"><input type="radio" name="q9_team" value="2_maessig_entlastend" /></td>
+            <td class="radio-cell"><input type="radio" name="q9_team" value="3_wenig_entlastend" /></td>
+            <td class="radio-cell"><input type="radio" name="q9_team" value="4_nicht_entlastend" /></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="margin-top: 2rem;">
+        <h3 style="font-size:1.1rem; color:#1a6ea8; border-bottom: 2px solid #eaf4fb; padding-bottom:0.4rem; margin-bottom:0.8rem;">Offene Rückmeldung</h3>
+        <label class="open-label" for="offen1">Welche Situation würde durch eine solche Stelle am ehesten entlastet?</label>
+        <textarea id="offen1" name="offene_frage_1" placeholder="Ihre Antwort..."></textarea>
+        <label class="open-label" for="offen2">Welche Aufgabe sollte eine Ergotherapeut*in ausdrücklich <em>nicht</em> übernehmen?</label>
+        <textarea id="offen2" name="offene_frage_2" placeholder="Ihre Antwort..."></textarea>
+      </div>
+
+      <div style="margin-top: 2rem;">
+        <h3 style="font-size:1.1rem; color:#1a6ea8; border-bottom: 2px solid #eaf4fb; padding-bottom:0.4rem; margin-bottom:1rem;">Gesamteinschätzung</h3>
+        <div class="rating-buttons">
+          <label class="rating-btn"><input type="radio" name="gesamt" value="1_stark_entlastend" required /> Stark entlastend</label>
+          <label class="rating-btn"><input type="radio" name="gesamt" value="2_maessig_entlastend" /> Mäßig entlastend</label>
+          <label class="rating-btn"><input type="radio" name="gesamt" value="3_wenig_entlastend" /> Wenig entlastend</label>
+          <label class="rating-btn"><input type="radio" name="gesamt" value="4_nicht_entlastend" /> Nicht entlastend</label>
+        </div>
+        <label class="begr-label" for="begruendung">Kurze Begründung:</label>
+        <textarea id="begruendung" name="begruendung" placeholder="Ihre Begründung..."></textarea>
+      </div>
+
+      <div class="submit-section">
+        <p class="privacy-note">&#128274; Ihre Angaben werden vertraulich behandelt und ausschließlich für interne Forschungszwecke genutzt.</p>
+        <button type="submit">Rückmeldung absenden &#10148;</button>
+      </div>
+
+    </form>
+
+    <div class="success-msg" id="successMsg">
+      &#9989; Vielen Dank für Ihre Rückmeldung! Ihre Antwort wurde erfolgreich übermittelt.
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const kita = params.get('kita');
+  if (kita) {
+    document.getElementById('kitaField').value = decodeURIComponent(kita);
+  }
+
+  const form = document.getElementById('rueckmeldebogen');
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const data = new FormData(form);
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    if (response.ok) {
+      form.style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+    } else {
+      alert('Es gab ein Problem beim Absenden. Bitte versuche es erneut.');
+    }
+  });
+</script>
+
+</body>
+</html>
